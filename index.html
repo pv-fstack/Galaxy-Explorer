@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galaxy Explorer — Aurora Cosmic Interactive Suite</title>
+
+  <!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- AURORA AMBIENT GLOW BACKGROUND -->
+  <div class="aurora-glow-container">
+    <div class="aurora-blob cyan-blob"></div>
+    <div class="aurora-blob purple-blob"></div>
+    <div class="aurora-blob blue-blob"></div>
+    <div class="aurora-blob emerald-blob"></div>
+  </div>
+
+  <!-- CANVAS LAYER -->
+  <canvas id="starfield-canvas"></canvas>
+  <canvas id="cursor-canvas"></canvas>
+
+  <!-- MAIN APP WRAPPER -->
+  <div id="app">
+
+    <!-- TOP TELEMETRY HUD BAR -->
+    <div class="hud-top-bar">
+      <div class="hud-item">
+        <span class="hud-dot pulsing"></span>
+        <span class="hud-text">STATUS: <strong class="aurora-cyan">TELEMETRY ONLINE</strong></span>
+      </div>
+      <div class="hud-item hud-sector">
+        <svg class="hud-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span>WAYPOINT: <strong class="aurora-purple">ORION-CYGNUS ARM (SECTOR 04)</strong></span>
+      </div>
+      <div class="hud-item hud-controls">
+        <button id="sound-toggle-btn" class="hud-btn" title="Toggle Ambient Audio">
+          <svg id="sound-svg" class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <span>AUDIO: <strong id="sound-status" class="aurora-cyan">ON</strong></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STICKY NAVBAR -->
+    <header class="navbar-wrap">
+      <nav class="navbar glass-panel">
+        <a href="#" class="brand">
+          <div class="brand-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="brand-svg"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">GALAXY <span class="gradient-text">EXPLORER</span></span>
+            <span class="brand-sub">AURORA COSMIC SUITE</span>
+          </div>
+        </a>
+
+        <div class="nav-links">
+          <a href="#galaxy" class="nav-link active"><span class="nav-num">01.</span> Overview</a>
+          <a href="#types" class="nav-link"><span class="nav-num">02.</span> Morphology</a>
+          <a href="#solar-simulator" class="nav-link"><span class="nav-num">03.</span> Orbit 3D</a>
+          <a href="#planets" class="nav-link"><span class="nav-num">04.</span> Catalogue</a>
+          <a href="#compare" class="nav-link"><span class="nav-num">05.</span> Compare</a>
+          <a href="#quiz" class="nav-link"><span class="nav-num">06.</span> Challenge</a>
+          <a href="#facts" class="nav-link"><span class="nav-num">07.</span> Knowledge</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg class="icon-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <span>INTERSTELLAR OBSERVATORY</span>
+        </div>
+        <h1 class="hero-title">
+          DISCOVER THE <br />
+          <span class="gradient-title">BOUNDLESS COSMOS</span>
+        </h1>
+        <p class="hero-desc">
+          Immerse yourself in real-time 3D planetary physics, high-definition galaxy morphology, orbital mechanics, and astrophysics intelligence.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#solar-simulator" class="btn btn-primary glow-btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/></svg>
+            <span>Launch Orbit Simulator</span>
+          </a>
+          <a href="#planets" class="btn btn-secondary glass-btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+            <span>Explore Planets</span>
+          </a>
+          <a href="#quiz" class="btn btn-outline">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>Space Challenge</span>
+          </a>
+        </div>
+
+        <!-- HERO STATS GRID -->
+        <div class="hero-stats-grid glass-panel">
+          <div class="hero-stat">
+            <span class="stat-val aurora-cyan">200B+</span>
+            <span class="stat-lbl">Stars in Milky Way</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-val aurora-purple">100,000</span>
+            <span class="stat-lbl">Light-Years Wide</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-val aurora-gold">8</span>
+            <span class="stat-lbl">Major Planets</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-val aurora-emerald">13.8B</span>
+            <span class="stat-lbl">Years Universe Age</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01. WHAT IS A GALAXY -->
+    <section id="galaxy" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">01 / OVERVIEW</div>
+        <h2 class="section-title">What is a Galaxy?</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <div class="galaxy-overview-grid">
+        <div class="galaxy-info-card glass-panel highlight-border">
+          <h3>The Ultimate Cosmic Cities</h3>
+          <p>
+            A <strong class="aurora-cyan">galaxy</strong> is a massive gravitationally bound system composed of stars, stellar remnants, interstellar gas, cosmic dust, and elusive <strong class="aurora-purple">dark matter</strong>. They range in scale from dwarf systems with hundreds of millions of stars to giants harboring one hundred trillion stars.
+          </p>
+          <p>
+            Our planetary system resides inside the <strong class="aurora-gold">Milky Way</strong> — a barred spiral galaxy with sweeping spiral arms glowing with stellar nurseries and cosmic dust lanes.
+          </p>
+
+          <div class="cosmic-fact-pill">
+            <div class="pill-icon-wrap">
+              <svg class="pill-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+            </div>
+            <div class="pill-content">
+              <strong>Galactic Velocity:</strong> Our Solar System orbits the supermassive galactic center at approximately <strong>828,000 km/h (514,000 mph)</strong>, taking 230 million years to complete one revolution.
+            </div>
+          </div>
+        </div>
+
+        <div class="milky-way-card glass-panel">
+          <div class="card-badge">HOME SYSTEM</div>
+          <h3>Milky Way Telemetry</h3>
+          <div class="spec-list">
+            <div class="spec-row">
+              <span class="spec-name">Galactic Core</span>
+              <span class="spec-val aurora-cyan">Sagittarius A* (Supermassive Black Hole)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">Spiral Arm Location</span>
+              <span class="spec-val aurora-purple">Orion–Cygnus Local Arm</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">Estimated Mass</span>
+              <span class="spec-val aurora-gold">1.5 Trillion Solar Masses</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">Nearest Neighbor</span>
+              <span class="spec-val aurora-emerald">Andromeda Galaxy (M31)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-name">Predicted Event</span>
+              <span class="spec-val aurora-pink">Andromeda Merger (in 4.5B Years)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. TYPES OF GALAXIES -->
+    <section id="types" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">02 / MORPHOLOGY</div>
+        <h2 class="section-title">Types of Galaxies</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <p class="section-subdesc">
+        Hubble's classification divides galaxies into distinct structural forms. Examine deep-space observations below:
+      </p>
+
+      <div class="galaxy-types-grid">
+
+        <!-- SPIRAL GALAXY -->
+        <div class="type-card glass-panel spiral-theme">
+          <div class="galaxy-img-wrap">
+            <img src="assets/spiral_galaxy.jpg" alt="Spiral Galaxy Visual" class="galaxy-img" />
+            <div class="galaxy-img-overlay">
+              <span class="view-tag">DEEP SPACE OBSERVATION</span>
+            </div>
+          </div>
+
+          <div class="type-card-body">
+            <div class="type-header-row">
+              <div class="type-badge-icon cyan-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-svg"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+              </div>
+              <div class="type-title-group">
+                <h3>Spiral Galaxies</h3>
+                <span class="type-sub">Rotating Pinwheel Structure</span>
+              </div>
+            </div>
+            <p>
+              Characterized by a dense stellar bulge surrounded by a flat rotating disk with sweeping arms rich in interstellar dust and active star formation.
+            </p>
+            <div class="type-meta">
+              <span class="meta-item"><strong class="aurora-cyan">Occurrence:</strong> ~60% of Universe</span>
+              <span class="meta-item"><strong class="aurora-purple">Examples:</strong> Milky Way, Whirlpool (M51), Andromeda</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ELLIPTICAL GALAXY -->
+        <div class="type-card glass-panel elliptical-theme">
+          <div class="galaxy-img-wrap">
+            <img src="assets/elliptical_galaxy.jpg" alt="Elliptical Galaxy Visual" class="galaxy-img" />
+            <div class="galaxy-img-overlay">
+              <span class="view-tag">DEEP SPACE OBSERVATION</span>
+            </div>
+          </div>
+
+          <div class="type-card-body">
+            <div class="type-header-row">
+              <div class="type-badge-icon gold-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-svg"><ellipse cx="12" cy="12" rx="10" ry="6"/></svg>
+              </div>
+              <div class="type-title-group">
+                <h3>Elliptical Galaxies</h3>
+                <span class="type-sub">Smooth Stellar Swarm</span>
+              </div>
+            </div>
+            <p>
+              Smooth, featureless, ellipsoidal clouds of stars containing mostly ancient population stars with low dust density and minimal active star formation.
+            </p>
+            <div class="type-meta">
+              <span class="meta-item"><strong class="aurora-gold">Occurrence:</strong> ~20% of Universe</span>
+              <span class="meta-item"><strong class="aurora-emerald">Examples:</strong> M87, IC 1101 (Giant Elliptical)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- IRREGULAR GALAXY -->
+        <div class="type-card glass-panel irregular-theme">
+          <div class="galaxy-img-wrap">
+            <img src="assets/irregular_galaxy.jpg" alt="Irregular Galaxy Visual" class="galaxy-img" />
+            <div class="galaxy-img-overlay">
+              <span class="view-tag">DEEP SPACE OBSERVATION</span>
+            </div>
+          </div>
+
+          <div class="type-card-body">
+            <div class="type-header-row">
+              <div class="type-badge-icon pink-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-svg"><path d="M4 14.71 10 3l3.6 7.5L20 12l-5.4 4.5L16 22l-6-3.8L4 21.5l.8-6.79Z"/></svg>
+              </div>
+              <div class="type-title-group">
+                <h3>Irregular Galaxies</h3>
+                <span class="type-sub">Gravitational Collision Chaos</span>
+              </div>
+            </div>
+            <p>
+              Galaxies lacking symmetrical structure. Frequently formed from violent gravitational encounters, tidal interactions, or galactic mergers.
+            </p>
+            <div class="type-meta">
+              <span class="meta-item"><strong class="aurora-pink">Occurrence:</strong> ~20% of Universe</span>
+              <span class="meta-item"><strong class="aurora-cyan">Examples:</strong> Magellanic Clouds, Antennae Galaxies</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 03. SOLAR SYSTEM ORBIT SIMULATOR -->
+    <section id="solar-simulator" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">03 / MECHANICS</div>
+        <h2 class="section-title">Solar System Orbit Simulator</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <div class="simulator-wrapper glass-panel">
+        <div class="sim-toolbar">
+          <div class="sim-controls-group">
+            <button id="sim-play-btn" class="sim-btn active">
+              <svg id="sim-play-svg" class="icon-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              <span id="sim-play-text">PAUSE</span>
+            </button>
+            <div class="sim-speed-box">
+              <label for="sim-speed-slider">SPEED: <span id="sim-speed-val" class="aurora-cyan">1.0x</span></label>
+              <input type="range" id="sim-speed-slider" min="0.1" max="5" step="0.1" value="1.0" />
+            </div>
+          </div>
+
+          <div class="sim-view-options">
+            <button id="sim-lines-btn" class="sim-btn active">
+              <svg class="icon-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+              <span>Orbit Paths</span>
+            </button>
+            <button id="sim-reset-btn" class="sim-btn">
+              <svg class="icon-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Reset Positions</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CANVAS ORBIT DISPLAY -->
+        <div class="sim-canvas-container">
+          <canvas id="orbit-canvas" width="1000" height="560"></canvas>
+          <div class="sim-tooltip" id="sim-tooltip">Click planet to inspect</div>
+        </div>
+
+        <div class="sim-footer-info">
+          <span>Tip: Click any orbiting body to launch its 3D inspector card.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. PLANET EXPLORER GRID -->
+    <section id="planets" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">04 / CATALOGUE</div>
+        <h2 class="section-title">Planetary Catalogue</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <div class="catalogue-filter-bar">
+        <button class="filter-btn active" data-filter="all">All Celestial Bodies (8)</button>
+        <button class="filter-btn" data-filter="inner">Inner Terrestrial (4)</button>
+        <button class="filter-btn" data-filter="outer">Outer Gas Giants (4)</button>
+      </div>
+
+      <!-- DYNAMIC PLANETS GRID -->
+      <div class="planets-grid" id="planets-grid-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- 05. PLANET COMPARISON TOOL -->
+    <section id="compare" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">05 / ANALYSIS</div>
+        <h2 class="section-title">Side-by-Side Planet Comparison</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <div class="comparison-tool glass-panel">
+        <div class="compare-selectors">
+          <div class="selector-box">
+            <label for="compare-select-a">SELECT PLANET A</label>
+            <select id="compare-select-a" class="custom-select"></select>
+          </div>
+          <div class="versus-badge">VS</div>
+          <div class="selector-box">
+            <label for="compare-select-b">SELECT PLANET B</label>
+            <select id="compare-select-b" class="custom-select"></select>
+          </div>
+        </div>
+
+        <!-- COMPARISON DISPLAY CONTAINER -->
+        <div class="compare-display-grid" id="compare-display-container">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. SPACE QUIZ HUB -->
+    <section id="quiz" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">06 / CHALLENGE</div>
+        <h2 class="section-title">Space Intelligence Challenge</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <div class="quiz-container glass-panel glow-border-gold">
+        <div class="quiz-hud-bar">
+          <div class="quiz-hud-left">
+            <span class="hud-badge gold">CHALLENGE MODE</span>
+            <span class="hud-score">SCORE: <strong id="quiz-score-val" class="aurora-gold">0</strong> / <span id="quiz-total-val">8</span></span>
+          </div>
+
+          <div class="quiz-pips-container" id="quiz-pips">
+            <!-- Pips generated by JS -->
+          </div>
+        </div>
+
+        <!-- QUIZ CONTENT BOX -->
+        <div class="quiz-body" id="quiz-body">
+          <h3 id="quiz-question-text">Loading question...</h3>
+
+          <div class="quiz-options-grid" id="quiz-options-grid">
+            <!-- Options generated by JS -->
+          </div>
+
+          <div id="quiz-feedback-box" class="quiz-feedback-box"></div>
+
+          <div class="quiz-action-bar">
+            <button id="quiz-next-btn" class="btn btn-gold w-full" disabled>
+              <span>Next Question</span>
+              <svg class="btn-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07. MIND-BLOWING SPACE FACTS -->
+    <section id="facts" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">07 / KNOWLEDGE</div>
+        <h2 class="section-title">Astrophysics Fact Archive</h2>
+        <div class="title-accent-line"></div>
+      </div>
+
+      <div class="facts-filter-wrap">
+        <div class="facts-search-box glass-panel">
+          <svg class="search-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="facts-search-input" placeholder="Search cosmic facts (e.g. Venus, Black Hole, Sun, Gravity)..." />
+        </div>
+        <button id="facts-shuffle-btn" class="btn btn-secondary glass-btn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+          <span>Shuffle Deck</span>
+        </button>
+      </div>
+
+      <div class="facts-grid" id="facts-grid-container">
+        <!-- Facts rendered by JS -->
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-wrap">
+      <div class="footer-content glass-panel">
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="footer-svg"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+          <span>GALAXY EXPLORER</span>
+        </div>
+        <p class="footer-quote">
+          "The universe is under no obligation to make sense to you — but exploring it is humanity's greatest adventure."
+        </p>
+
+        <div class="footer-nav">
+          <a href="#galaxy">Overview</a> •
+          <a href="#types">Morphology</a> •
+          <a href="#solar-simulator">Orbit Simulator</a> •
+          <a href="#planets">Catalogue</a> •
+          <a href="#compare">Compare</a> •
+          <a href="#quiz">Challenge</a> •
+          <a href="#facts">Knowledge</a>
+        </div>
+
+        <div class="footer-bottom">
+          <span>Aurora Cosmic Explorer Architecture</span>
+          <button id="back-to-top-btn" class="btn-top" title="Back to top">
+            <span>Back to Top</span>
+            <svg class="icon-svg-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- FLOATING BACK TO TOP BUTTON -->
+  <button id="floating-top-btn" class="floating-top-btn" title="Scroll to top">
+    <svg class="icon-svg-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+
+  <!-- PLANET DETAIL INSPECTOR MODAL -->
+  <div id="planet-modal" class="modal-overlay">
+    <div class="modal-card glass-panel">
+      <button id="modal-close-btn" class="modal-close" title="Close Modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-svg-md"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+
+      <div class="modal-grid">
+        <div class="modal-left">
+          <div class="modal-canvas-box">
+            <canvas id="modal-planet-canvas" width="340" height="340"></canvas>
+            <div class="canvas-tip">Interactive spherical lighting preview</div>
+          </div>
+          <div id="modal-planet-tag" class="modal-planet-tag">INNER TERRESTRIAL</div>
+        </div>
+
+        <div class="modal-right">
+          <h2 id="modal-planet-name" class="modal-title">Earth</h2>
+          <div id="modal-planet-subtitle" class="modal-subtitle">The Blue Marble & Cradle of Life</div>
+
+          <p id="modal-planet-desc" class="modal-desc">
+            Earth is the third planet from the Sun and the only astronomical object known to harbor life.
+          </p>
+
+          <!-- SPECS GRID -->
+          <div class="modal-specs-grid" id="modal-specs-grid">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- ATMOSPHERE COMPOSITION BAR -->
+          <div class="atmosphere-box">
+            <h4>ATMOSPHERE COMPOSITION</h4>
+            <div id="modal-atmosphere-bars" class="atmosphere-bars">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
